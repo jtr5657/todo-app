@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>todo-vue</title>
+</head>
+
+<body>
+    
+    <div id="vueApp">
+        <h1 class="welcome"> To Do List</h1>
+        <ul>
+            <!-- loops through to do items-->
+            <li v-bind:key="todo.id" v-for="todo in todos">
+                
+                <Todo class:todo="todo" />
+                <Todo v-bind:todo="todo" v-on:delete-todo="$emit('delete-todo',todo.id)" />
+                <AddTodo class:add-todo="addTodo" />
+                
+                <!-- event should call deleteTodo method on click -->
+                <button @click="$emit('delete-todo', todo.id)">Delete</button>
+                
+                <div v-bind:class="{ 'completed': todo.completed }">
+                    <p @click="markComplete()">{{todo.title}}</p>
+                </div>
+            </li>
+        </ul> 
+    <p>   
+             
+    <!-- user input task name-->
+         <input v-model="name">
+        </p>
+<p>
+    <!-- calls addTodo method when pressed -->
+    <button @click="addTodo(name)">Add</button>
+    </p>
+        
+    <script>
+        import Todos from 'js/main.js/components/Todos';
+        import AddTodo from 'js/main.js/components/AddTodo';
+        export default {
+        name: 'app',
+        components: {
+        Todos,
+        AddTodo
+        },
+        data() {
+            return {
+                todos: [
+                {
+                    id: 1,
+                    title: 'Go workout',
+                    completed: false
+                },
+                {
+                    id: 2,
+                    title: 'Do laundry',
+                    completed: false
+                },
+                {
+                    id: 3,
+                    title: 'Cook food',
+                    completed: false
+                },
+                {
+                    id: 4,
+                    title: 'Clean up room',
+                    completed: false
+                },
+                {
+                    id: 5,
+                    title: 'Finish work',
+                    completed: false
+                }
+                ],
+            }
+        },
+        methods: {
+        addTodo(newTodoObj) {
+            this.todos = [...this.todos, newTodoObj];
+        },
+        deleteTodo(todoId) {
+            this.todos = this.todos.filter(todo => todo.id !== todoId);
+        },
+        
+        markComplete() {
+    
+      /* tests to see if click was registered*/
+      alert("Completed task is " + todo)
+      this.todo.completed = !this.todo.completed
+        
+            }
+        }
+    </script>
+        
+<!-- For markComplete method -->
+ <style scoped>
+     .completed {
+         text-decoration: line-through;
+     }
+ </style>
+</div>
+
+    <!-- import javascript-->
+    <script src="js/vue.min.js"></script>
+    <script src="js/main.js"></script>
+    
+    
+</body>
+
+</html>
